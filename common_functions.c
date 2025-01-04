@@ -72,4 +72,13 @@ int matchingIndecies(char element)
         break;
     }
 }
+void freegrids(int** p1,int** p2){
+     for (int i = 0; i < GridSize; i++)
+    {
+        free(p1[i]);
+        free(p2[i]);
+    }
+    free(p1);
+    free(p2);
 
+}
