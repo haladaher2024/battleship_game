@@ -187,24 +187,9 @@ printf("You LOST!");
 
     // Free the allocated memory 
 
-    for (int i = 0; i < GridSize; i++)
-    {
-        free(Player[i]);
-        free(Bot[i]);
-    }
-    free(Player);
-    free(Bot);
-
-    for (int i = 0; i < GridSize; i++) {
-    free(playerSmoke[i]);
-    free(BotSmoke[i]);
-}
-
-free(playerSmoke);
-free(BotSmoke);
-
-
-    }
+   
+        freegrids(player,Bot);
+        freegrids(playersmoke,Botsmoke);
  //start 
     else{                                                                                                                                                                   
  char **player1 = (char **)malloc(sizeof(char *) * 10);
@@ -696,26 +681,14 @@ printf("Congratulations %s ! You have WON!!",otherplayerN);
 
     // Free the allocated memory for the player grid
 
-    for (int i = 0; i < GridSize; i++)
-    {
-        free(player1[i]);
-        free(player2[i]);
-    }
-    free(player1);
-    free(player2);
+ 
+freegrids(player1,player2);
+ freegrids(currentplayerSmoke,otherplayerSmoke);
 
-    for (int i = 0; i < GridSize; i++) {
-    free(currentplayerSmoke[i]);
-    free(otherplayerSmoke[i]);
-}
-free(currentplayerSmoke);
-free(otherplayerSmoke);
-
-
-    return 0;
+   
 }
 
-
+ return 0;
 
 
 
