@@ -14,8 +14,7 @@ typedef struct
     int row;
     int col;
 } coordinate;
-coordinate targetList[MAX_TARGETS];
-coordinate list[4];
+
   
 char matchingCharacters(int length)
 {
@@ -337,23 +336,14 @@ for(int i=0;i<ShipNumber;i++){
     {
         ArtilleryBot(heatmap, ship, DisplayedGridBot, oponentGrid);
     }
-    else if (radarSweepsUsedBot < 3 && targetCount == 0 && flag==0)
-    {
-    
-        RadarSweepBot(oponentGrid, DisplayedGridBot, radarSweepsUsedBot, heatmap, ship, SmokeGridOpp);
-        radarSweepsUsedBot++;
-    }
-    else if (flagShipSunkInCurrentTurn > 0 && smokeScreensUsedBot < totalNumberOfShipsSunkByBot)
-    {
-        // Smoke()
-    }
+
     else
     {
         FireBot(oponentGrid, heatmap, DisplayedGridBot, ship);
         
     }
     flagShipSunkInCurrentTurn = ShipsSunkByBot(ship);
-    ;
+    
     if (flagShipSunkInCurrentTurn)
     {
         generateHeatmap(ship, heatmap, DisplayedGridBot);
@@ -455,16 +445,7 @@ char updateDisplayedGridBot(char **opponentGrid, char **DisplayGridBot, int next
         result = DisplayGridBot[nexti][nextj] = 'o';
         misses++; // Miss
     }
-    if (isTargetPresent(nexti, nextj))
-    {
-        for (int i = 0; i < targetCount; i++)
-        {
-            if (list[i].row == nexti && list[i].col == nextj)
-                removeTarget(i);
-            break;
-        }
-    }
-    return result;
+
 }
 
 int ShipsSunkByBot(int *ship)
@@ -766,293 +747,6 @@ sum+=heatmap[i][num];
 }
 bool visited[GridSize][GridSize] = {false};
 
-// Comparator function for sorting cells based on heatmap values in descending order
-int compareCells(const void *a, const void *b, void *heatmap_void)
-{
-    int **heatmap = (int **)heatmap_void;
-    int rowA = ((int *)a)[0];
-    int colA = ((int *)a)[1];
-    int rowB = ((int *)b)[0];
-    int colB = ((int *)b)[1];
-
-    return heatmap[rowB][colB] - heatmap[rowA][colA];
-}
-
-// Helper function to check if a cell is adjacent to any sunk ship
-bool isAdjacentToSunkShip(int row, int col, char **opponentGrid, int *ship)
-{
-
-    int dRow[] = {-1, 1, 0, 0, -1, -1, 1, 1};
-    int dCol[] = {0, 0, 1, -1, 1, -1, 1, -1};
-
-    for (int i = 0; i < 8; i++)
-    {
-        int adjRow = row + dRow[i];
-        int adjCol = col + dCol[i];
-
-        if (adjRow >= 0 && adjRow < GridSize && adjCol >= 0 && adjCol < GridSize)
-        {
-            char cell = opponentGrid[adjRow][adjCol];
-            if (isalpha(cell))
-            {
-
-                int shipIndex = matchingIndecies(cell);
-                if (shipIndex != -1 && ship[shipIndex] == -1)
-                {
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-
-// Merged RadarSweepBot function with embedded RadarSweep logic (2x2 sweep area)
-void RadarSweepBot(char **opponentGrid, char **displayedGrid, int radarSweepsUsedBot, int **heatmap, int *ship, int **SomkeGridOppd){
- 
-
-    bool **arr = sunkships(ship, opponentGrid, displayedGrid);
-    int row = -1;
-    int col = -1;
-    for (int i = 0; i < GridSize; i++)
-    {
-        for (int j = 0; j < GridSize; j++)
-        {
-            if (!arr[i][j] && displayedGrid[i][j] == '*')
-            {
-                row = i;
-                col = j;
-               
-            }
-        }
-    }
-
-    if (row != -1 && col != -1)
-    {
-        char c = GetGreatestArea(heatmap, row, col);
-
-        switch (c)
-        {
-        case 'A':
-            row = row - 2;
-            break;
-        case 'B':
-            row = row + 2;
-            break;
-        case 'L':
-            col = col - 2;
-            break;
-        case 'R':
-            col = col + 2;
-            break;
-        default:
-            break;
-        }
-    }
-    else
-    {
-     
-        int **Grid = malloc(4 * sizeof(int *));
-        for (int i = 0; i < 4; i++)
-        {
-            Grid[i] = malloc(2 * sizeof(int));
-            for (int j = 0; j < 2; j++)
-            {
-                Grid[i][j] = 0; // Initialize each element to 0
-            }
-        }
-        findHighest2x2Grid(heatmap, Grid); // Assuming this handles memory allocation
-        row = Grid[0][0];
-        col = Grid[0][1];
-        for (int i = 0; i < 4; i++)
-        {
-            free(Grid[i]);
-        }
-        free(Grid);
-    }
-
-    printf("Bot chose radar sweep coordinates: %d   %d\n", row, col);
-
-    int shipsFound = 0;
-    for (int i = row; i < row + 2; i++)
-    {
-        if (shipsFound)
-            break;
-        for (int j = col; j < col + 2; j++)
-        {
-            if (checkIndex(i, j))
-            {
-                if (displayedGrid[i][j] == '~')
-                {
-                
-                    if (isalpha(opponentGrid[i][j]))
-                    {
-                        shipsFound = 1;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-
-    int validGrid = 1;
-    for (int i = row; i < row + 2; i++)
-    {
-        for (int j = col; j < col + 2; j++)
-        {
-            if (!checkIndex(i, j))
-            {
-                validGrid = 0;
-                break;
-            }
-        }
-    }
-
-    if (validGrid)
-    {
-        if (shipsFound == 0)
-        {
-            for (int i = row; i < row + 2; i++)
-            {
-                for (int j = col; j < col + 2; j++)
-                {
-                   
-                    heatmap[i][j] -= 3;
-                }
-            }
-        }
-
-        else
-        {
-            int index = 0;
-            for (int i = row; i < row + 2; i++)
-            {
-                for (int j = col; j < col + 2; j++)
-                {
-
-                    heatmap[i][j] += 5;
-                    list[index].row = i;
-                    list[index].col = j;
-                    targetCount++;
-                    index++;
-                }
-            }
-        }
-    }
-}
-/*
-int SmokeScreenBot (int **smokeGrid, char **displayedGrid, int shipsSunk, int smokeScreensUsedBot) {
-    if (smokeScreensUsedBot >= shipsSunk) {
-        printf("The bot cannot use any more smoke screens\n");
-        return 0;
-    }
-
-    int row = -1, col = -1;
-    bool foundNewArea = false;
-
-    // Implementing Edge and Corner Bias for Smoke Screen
-    for (int i = 0; i < GridSize && !foundNewArea; i++) {
-        for (int j = 0; j < GridSize && !foundNewArea; j++) {
-            if ((i == 0 || i == GridSize - 1 || j == 0 || j == GridSize - 1) && !visited[i][j]) {
-                row = i;
-                col = j;
-                foundNewArea = true;
-            }
-        }
-    }
-
-    // If no edges or corners are found, choose an area near bot's ships (Proximity to Player's Ship Locations)
-    if (!foundNewArea) {
-        for (int i = 0; i < GridSize && !foundNewArea; i++) {
-            for (int j = 0; j < GridSize && !foundNewArea; j++) {
-                if (displayedGrid[i][j] == '*' && !visited[i][j]) {
-                    row = i;
-                    col = j;
-                    foundNewArea = true;
-                }
-            }
-        }
-    }
-
-    // If no new area is found (e.g., all edges and ship areas are covered), use a random area
-    if (!foundNewArea) {
-        srand(time(NULL));
-        do {
-            row = rand() % GridSize;
-            col = rand() % GridSize;
-        } while (visited[row][col]);
-    }
-
-    visited[row][col] = true;
-
-    printf("Bot chose smoke screen coordinates: %c%d\n", 'A' + row, col + 1);
-
-    // Deploy the smoke screen in a 2x2 area starting from the chosen coordinates
-    for (int i = row; i < row + 2; i++) {
-        for (int j = col; j < col + 2; j++) {
-            if (i >= 0 && i < GridSize && j >= 0 && j < GridSize) {
-                smokeGrid[i][j] = 1;
-            }
-        }
-    }
-
-    printf("Bot deployed smoke screen successfully\n");
-   return 1;
-}*/
-
-// Helper functions
-bool addTarget(int row, int col)
-{
-    // Check for duplicates
-    for (int i = 0; i < targetCount; i++)
-    {
-        if (targetList[i].row == row && targetList[i].col == col)
-        {
-            return false; // Duplicate found, do not add
-        }
-    }
-
-    if (targetCount < MAX_TARGETS)
-    {
-        targetList[targetCount].row = row;
-        targetList[targetCount].col = col;
-        targetCount++;
-        return true;
-    }
-    else
-    {
-        printf("Target list is full. Cannot add more targets.\n");
-        return false;
-    }
-}
-void removeTarget(int index)
-{
-    if (index < 0 || index >= targetCount)
-    {
-        printf("Invalid target index: %d\n", index);
-        return;
-    }
-
-    for (int i = index; i < targetCount - 1; i++)
-    {
-        list[i] = list[i + 1];
-    }
-    targetCount--;
-}
-
-bool isTargetPresent(int row, int col)
-{
-    for (int i = 0; i < targetCount; i++)
-    {
-        if (list[i].row == row && list[i].col == col)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
 void findHighest2x2Grid(int **heatmap, int **Grid)
 {
 
@@ -1161,16 +855,6 @@ void choosenGrid(char direction, int col, int row, int **heatmap, char **opponen
 void ArtilleryBot(int **heatmap, int *ship, char **DisplayedBotGrid, char**opponentGrid)
 {
    
-   /* if (targetCount>0)
-    {
-       for(int i=list[0].row;i<list[0].row+2;i++){
-        for(int j=list[0].col;j<list[0].col+2;j++){
-char result= updateDisplayedGridBot(opponentGrid, DisplayedBotGrid, i,j, ship, heatmap);
-               updateHeatMap(i, j, result, "fire", heatmap);
-        // RadarGrid logic
-    }}}
-   else
-   {*/
         bool **isShip = sunkships(ship, opponentGrid, DisplayedBotGrid);
         int col = -1, row = -1;
         for (int i = 0; i < GridSize; i++)
