@@ -7,7 +7,6 @@
 #define GridSize 10
 #define ShipNumber 4
 
-
 void gridInitialization(char **grid)
 {
     for (int i = 0; i < 10; i++)
@@ -72,13 +71,56 @@ int matchingIndecies(char element)
         break;
     }
 }
-void freegrids(int** p1,int** p2){
-     for (int i = 0; i < GridSize; i++)
+void freegrids(char **p1, char **p2)
+{
+    for (int i = 0; i < GridSize; i++)
     {
         free(p1[i]);
         free(p2[i]);
     }
     free(p1);
     free(p2);
+}
+void freegridsInt(int **p1)
+{
+    for (int i = 0; i < GridSize; i++)
+    {
+        free(p1[i]);
+    }
+    free(p1);
+}
 
+void flagSetter(int *counter, int increment, int* flag, char **grid, int output)
+{
+    if (output == 1)
+    {
+        printf("\nThis is the updated grid\n");
+        printgrid(grid);
+        if (increment >= 1)
+        {
+            *flag=1;
+        }
+        else
+        {
+        *flag = 0;
+        }
+
+printf("FLAG:%d",*flag);
+printf("Increment:%d",increment);
+       (* counter )+= increment;
+        printf("counter:%d",*counter);
+    }
+    else
+    {
+        printf("You have lost your turn\n");
+    }
+
+    printf("press enter to pass the turn ");
+    getchar();
+    getchar();
+    clearConsole();
+}
+void clearConsole()
+{
+    printf("\033[H\033[J");
 }
