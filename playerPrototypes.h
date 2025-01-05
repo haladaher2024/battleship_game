@@ -3,7 +3,6 @@
 void to_lowercase(char *str);
 void fillGrid(char **grid, char name[]);
 void locateship(int size, char letter, int col, int row, char **grid, char direction[]);
-void clearConsole();
 int ShipsSunk(int *ship);
 int Row(char *coordinate);
 int Col(char *coordinate);
