@@ -258,9 +258,7 @@ int main()
             }
 
             // flag to check if a ship was sunk within the current turn to unlock certain moves
-            printf("flag Before:%d  counter Before: %d",flagPlayer,counterSunkByPlayer);
             flagSetter(&counterSunkByPlayer, ShipsSunk(other), &flagPlayer, PlayerDisplayedGrid, output);
-                printf("\nflag After:%d  counter After: %d",flagPlayer,counterSunkByPlayer);
 
             // switching grids
             char **tempGrid = otherplayerG;
