@@ -104,11 +104,8 @@ void flagSetter(int *counter, int increment, int* flag, char **grid, int output)
         {
         *flag = 0;
         }
-
-printf("FLAG:%d",*flag);
-printf("Increment:%d",increment);
        (* counter )+= increment;
-        printf("counter:%d",*counter);
+      
     }
     else
     {
