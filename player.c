@@ -314,7 +314,7 @@ int SmokeScreen(int **smokeGrid, char *coordinate, int shipsSunk, int smokeScree
 }
 
 void fillGrid(char **grid, char name[])
-{
+{    printgrid(grid);
     char *ships[] = {"Carrier", "destroyer", "Battelship", "submarine"};
     int size[] = {5, 3, 4, 2};
     for (int i = 0; i < 4; i++)
@@ -446,7 +446,4 @@ void to_lowercase(char *str)
     }
 }
 
-void clearConsole()
-{
-    printf("\033[H\033[J");
-}
+
