@@ -15,7 +15,7 @@ The Battleship Game strategic game in which the players place their ships (Destr
   - **Fire**: Fires at a specified coordinate on the opponent's grid.
   - **Torpedo**: Unlocked after sinking 3 of the opponent's ships. Fires across a whole row or column.
   - **Artillery**: Unlocked after sinking an opponent's ship. Fires a 2x2 grid.
-- **Special Moves available only for human vs human version**
+- **Special Moves limited to the human vs human version**
   - **Radar**: Can be used 3 times to check if there is at least one hit in a specified 2x2 grid.
   - **Smoke**: Can be used as many times as the number of ships you’ve sunk. Covers a 2x2 grid to prevent the opponent's radar from detecting hits within that area.
 
@@ -46,4 +46,5 @@ Before playing, make sure you have the following installed:
 ### Running the Game
 1. **Clone the repository**:
    ```bash
-https://github.com/haladaher2024/battleship_game.git
+   https://github.com/haladaher2024/battleship_game.git
+
