@@ -45,4 +45,4 @@ Before playing, make sure you have the following installed:
 ### Running the Game
 1. **Clone the repository**:
    ```bash
-   https://github.com/jana-20058/cmps270_project.git
+https://github.com/haladaher2024/battleship_game.git
