@@ -300,7 +300,7 @@ flagSetter Function:
 Test cases:
 1.case were coordinates are not valid(output=0) 
 this case enures that this  function correctly handles the case when user enters unvalid coordinates
-Expected output: the following statments will be printed 
+Expected output: the following statments will be printed ("You have lost your turn" / " press enter to pass the turn ")
 2. case were coordinates passed are valid and a ship is sunk
 this case enures that this function correctly handles the case when coordinates are valid and a ship is sunk
 Expected output: the updated grid will pe printed and set flag to one for next turn and increment the counter of sunken ships.
