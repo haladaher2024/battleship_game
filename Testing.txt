@@ -152,7 +152,6 @@ Expected Output :set this row to 0 in the heat map Grid
 this case ensure that function will correctly update  heat map Grid to 0 at this column
 Expected Output :set this column to 0 in the heat map Grid 
 
-//will be adjusted later on when other functions are implmented
 botmove Function
 Test Cases:
 
@@ -285,8 +284,29 @@ Expected Output: A copy of the grid is printed.
 freegrids Function 
 test cases :
 pass any 2 grids (2d array) already allocated using malloc 
+this case enures that this function correctly dellocates memory allocted by these grids using  malloc.
 Expected output: it will free memory allocted by this 2 grids passed as an argument.
 
+freegrids Function:
+Test cases:
+
+1.pass a 2d array of integers already allocted by malloc
+this case enures that this function correctly dellocates memory allocted by this grid using  malloc.
+Expected output: Dellocte memory allocted by this grid.
+
+
+flagSetter Function:
+
+Test cases:
+1.case were coordinates are not valid(output=0) 
+this case enures that this  function correctly handles the case when user enters unvalid coordinates
+Expected output: the following statments will be printed 
+2. case were coordinates passed are valid and a ship is sunk
+this case enures that this function correctly handles the case when coordinates are valid and a ship is sunk
+Expected output: the updated grid will pe printed and set flag to one for next turn and increment the counter of sunken ships.
+3. case were coordinates passed are valid and a no ship is sunk
+this case enures that this function correctly handles the case when coordinates are valid and no ship is sunk.
+Expected output: the updated
 
 Testing the player's functions:
 
