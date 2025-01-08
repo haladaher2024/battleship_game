@@ -115,7 +115,16 @@
 
 //void freegrids(int** p1,int** p2)
 //requires:Nothing
-//Effects:Dellocate memory allocted by these 2 grids passed.
+//Effects:Dellocate memory allocted by these 2 grids passed(2d arrays of chars).
+
+//void freegrids(char **p1, char **p2)
+//requires: nothing
+//Effects: dellocate memory allocted by the grid passed (2D array of integers)
+
+
+//void flagSetter(int *counter, int increment, int *flag, char **grid, int output)
+//requires: nothing
+//Effects: if the user enters valid coordinates, the updated grid is printed, and if a ship is sunk, the flag is set to 1, and the number of sunken ships increases; otherwise, the flag is set to 0. If the coordinates are invalid, a message informs the
 
 // Player Functions
 
