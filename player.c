@@ -284,7 +284,7 @@ int RadarSweep(char **grid, char **displayedGrid, char *coordinate, int radarSwe
 }
 
 int SmokeScreen(int **smokeGrid, char *coordinate, int shipsSunk, int smokeScreensUsed) {
-    if (smokeScreensUsed >= shipsSunk) {
+    if (smokeScreensUsed > shipsSunk) {
         printf("You cant use  smoke screens\n");
         return 0; 
     }
