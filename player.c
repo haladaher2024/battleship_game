@@ -247,7 +247,7 @@ int Torpedo(char **opponentGrid, char **DisplayedGrid, char *coordinates, char *
 
 
 int RadarSweep(char **grid, char **displayedGrid, char *coordinate, int radarSweepsUsed, int **smokeGrid) {
-    if (radarSweepsUsed >= 3) {
+    if (radarSweepsUsed > 3) {
         printf("You have used all your radar sweeps\n");
         return 0; 
     }
