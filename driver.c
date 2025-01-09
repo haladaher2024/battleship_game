@@ -307,6 +307,10 @@ int main()
             int tempSmokeScreensUsed = smokeScreensUsedCurrent;
             smokeScreensUsedCurrent = smokeScreensUsedOther;
             smokeScreensUsedOther = tempSmokeScreensUsed;
+
+            int **tempsmoke=otherplayerSmoke;
+            otherplayerSmoke =currentplayerSmoke;
+            currentplayerSmoke=tempsmoke;
         }
         printf("The Game has ended\n");
         printf("Congratulations %s ! You have WON!!", otherplayerN);
