@@ -230,7 +230,7 @@ int main()
             }
             else if (strcmp(command, "radar") == 0)
             {
-                output = RadarSweep(otherplayerG, PlayerDisplayedGrid, coordinate, radarSweepsCurrent, otherplayerSmoke);
+                output = RadarSweep(otherplayerG, PlayerDisplayedGrid, coordinate, radarSweepsCurrent, currentplayerSmoke);
                 if (output == 1)
                 {
                     radarSweepsCurrent++;
@@ -259,6 +259,10 @@ int main()
 
             // flag to check if a ship was sunk within the current turn to unlock certain moves
             flagSetter(&counterSunkByPlayer, ShipsSunk(other), &flagPlayer, PlayerDisplayedGrid, output);
+
+               for (int i = 0; i < GridSize; i++)
+        {
+            currentplayerSmoke[i][i] = 0;}
 
             // switching grids
             char **tempGrid = otherplayerG;
